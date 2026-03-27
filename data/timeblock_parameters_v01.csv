@@ -1,0 +1,11 @@
+﻿Parameters,Time of day,,,,,,*Connected to all routes dataset so we can change parameters for sensitivity analysis easily ,
+,Early AM,AM Peak,Midday,PM Peak,Evening,Night,Comments,Source 
+Driver wage $ (W_driver),34.04,34.04,34.04,34.04,34.04,34.04,Blended rate for four tiers,https://jobs-emplois.ottawa.ca/city-jobs/job/Ottawa%2C-ON-Bus-Operator-ON/1290605947/
+Price of fuel $/litre (P_fuel),1.3,1.3,1.3,1.3,1.3,1.3,Took an average over 5 months in 2025,https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000101
+Fuel consumption litre/km (FC),0.198,0.242,0.22,0.242,0.22,0.198,Average is 0.22 taken for 2023 and added 10% for peak and minus 10% for off -peak,https://oee.nrcan.gc.ca/corporate/statistics/neud/dpa/showTable.cfm?type=HB&sector=tran&juris=00&rn=7&page=1
+Maintenace cost $/km (P_maintenance),0.4,0.4,0.4,0.4,0.4,0.4,,
+Passenger hourly wage rate $/hr (W_passenger),35.06,35.06,35.06,35.06,35.06,35.06,Average of hourly rates for range of occupations calculated in excel for given data,https://www.jobbank.gc.ca/wagereport/location/geo9193
+VTTS fraction of passenger wage F_wage,0.7,1,0.7,1,0.7,0.7,Wage fraction between 0.35-0.5 and time waiting for bus 2x more value / peak times higher value than off peak,
+"Emission intensity of a car kgCO2eq/KPT (I_GHG,car)",0.295,0.33,0.3,0.33,0.3,0.295,Taken from graph some approximations were made for off peak vs on peak times of day,
+Average Length of passenger trip (L_avg_trip),,,,,,,Right now it is estimated as 0.2 percent of the total length of the route/other approach is using a published estimate average trip length from OC transpo report ,
+Social cost of carbon $/tonne CO2eq (SCC),275,275,275,275,275,275,,

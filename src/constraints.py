@@ -17,16 +17,38 @@ def add_budget_constraint(
     expr = quicksum(cost_model.total(r, t, n_new[r, t]) for r, t in RT)
     return model.addConstr(expr <= budget_total, name=name)
 
+# def add_fleet_constraints(
+#     model: Model,
+#     n_new,
+#     R,
+#     T,
+#     buses_total: int,
+#     name_prefix: str = "fleet",
+# ):
+#     return {
+#         t: model.addConstr(quicksum(n_new[r, t] for r in R) <= buses_total, name=f"{name_prefix}[{t}]")
+#         for t in T
+#     }
+
 def add_fleet_constraints(
     model: Model,
     n_new,
     R,
     T,
-    buses_total: int,
+    buses_total,
     name_prefix: str = "fleet",
 ):
+    fleet_caps = (
+        {t: buses_total for t in T}
+        if not isinstance(buses_total, dict)
+        else buses_total
+    )
+
     return {
-        t: model.addConstr(quicksum(n_new[r, t] for r in R) <= buses_total, name=f"{name_prefix}[{t}]")
+        t: model.addConstr(
+            quicksum(n_new[r, t] for r in R) <= fleet_caps[t],
+            name=f"{name_prefix}[{t}]"
+        )
         for t in T
     }
 

@@ -3,15 +3,11 @@ from typing import Dict, Tuple
 
 Key = Tuple[str, str]
 
-
+# Nonlinear elasticity-based demand model used as the reference function for the Taylor linearization, 
+# with methods to compute frequency, ridership from buses, and ridership from frequency based on the elasticity parameter and the old values of ridership and fleet size
 @dataclass
 class DemandModel:
-    """
-    Nonlinear elasticity-based demand model used as the reference function for
-    the Taylor linearization.
 
-    x_new = x_old * (n_new / n_old) ** elasticity
-    """
     x_old: Dict[Key, float]
     n_old: Dict[Key, int]
     T_rt: Dict[Key, float]

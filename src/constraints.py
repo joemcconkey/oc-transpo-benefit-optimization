@@ -1,11 +1,15 @@
 from typing import Dict, Iterable, Tuple
 
-from gurobipy import GRB, Model, quicksum
+from gurobipy import GRB, Model, quicksum # type: ignore
 
 from src.costs import CostModel
 
 Key = Tuple[str, str]
 
+# This module defines helper functions to add various constraints to the optimization model, including budget constraints, fleet constraints, and variable bounds. It also includes a function to add integer decision variables for the number of buses on each route and time period.
+
+
+# The add_budget_constraint function adds a constraint to the model that limits the total operational cost (calculated using the CostModel) to be less than or equal to a specified budget.
 def add_budget_constraint(
     model: Model,
     n_new,
@@ -17,19 +21,7 @@ def add_budget_constraint(
     expr = quicksum(cost_model.total(r, t, n_new[r, t]) for r, t in RT)
     return model.addConstr(expr <= budget_total, name=name)
 
-# def add_fleet_constraints(
-#     model: Model,
-#     n_new,
-#     R,
-#     T,
-#     buses_total: int,
-#     name_prefix: str = "fleet",
-# ):
-#     return {
-#         t: model.addConstr(quicksum(n_new[r, t] for r in R) <= buses_total, name=f"{name_prefix}[{t}]")
-#         for t in T
-#     }
-
+# The add_fleet_constraints function adds constraints to the model that limit the total number of buses used in each time period to be less than or equal to specified fleet capacities.
 def add_fleet_constraints(
     model: Model,
     n_new,
@@ -52,6 +44,7 @@ def add_fleet_constraints(
         for t in T
     }
 
+# The add_bounds function adds lower and upper bound constraints to the model for the number of buses on each route and time period, based on specified minimum and maximum values.
 def add_bounds(
     model: Model,
     n_new,
@@ -70,6 +63,7 @@ def add_bounds(
     }
     return lower, upper
 
+# The add_integer_bus_vars function adds integer decision variables to the model for the number of buses on each route and time period, with specified minimum and maximum bounds.
 def add_integer_bus_vars(
     model: Model,
     RT: Iterable[Key],

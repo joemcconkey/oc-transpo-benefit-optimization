@@ -3,7 +3,8 @@ from typing import Dict, Tuple, Optional
 
 Key = Tuple[str, str]
 
-
+# First-order Taylor linearization of the nonlinear benefit terms around n_old, with support for an optional V_km_saved multiplier for the emissions term, 
+# and methods to compute time savings, emissions savings, total benefits, and linear coefficients for use in optimization models
 @dataclass
 class TaylorLinearBenefitModel:
     """
@@ -20,11 +21,13 @@ class TaylorLinearBenefitModel:
     - V_km_saved is optional for backward compatibility. If omitted, a multiplier
       of 1.0 is used for every route-time pair.
     """
-    beta_time: Dict[Key, float]
-    beta_emissions: Dict[Key, float]
+    beta_time: Dict[Key, float] # Route-time Taylor coefficients for the time-savings term
+    beta_emissions: Dict[Key, float] # Route-time Taylor coefficients for the emissions term, excluding V_km_saved
     n_old: Dict[Key, int]
     V_km_saved: Optional[Dict[Key, float]] = None
 
+    # Methods to compute the change in fleet size (delta_n), the time savings benefit, the emissions savings benefit (including the V_km_saved multiplier if provided), the total benefit, and the linear coefficient for use in optimization models, all based on the new fleet size n_new and the old fleet size n_old for each route-time pair.
+    
     def delta_n(self, r: str, t: str, n_new: int) -> int:
         return n_new - self.n_old[(r, t)]
 

@@ -1,6 +1,3 @@
-MECH 5800 — OC Transpo Optimization Model
-=========================================
-
 OVERVIEW
 --------
 This project develops a mixed-integer optimization model to allocate buses
